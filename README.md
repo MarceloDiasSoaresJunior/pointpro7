@@ -12,3 +12,5 @@
 ### Go to https://auth.local_pointpro7.com:1215/ or https://painel.local_pointpro7.com:1215/
 
 ### Chrome unsecure (https) access may be required.
+
+### Horas extras são contabilizadas dada a jornada do funcionário + 

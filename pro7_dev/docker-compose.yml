@@ -3,7 +3,7 @@ services:
   nginx:
     restart: unless-stopped
     image: nginx:alpine
-    container_name: pro7_nginx_dev
+    container_name: pro7_nginx
     working_dir: /app
     volumes:
       - ../laravel:/app
@@ -14,8 +14,8 @@ services:
       - ../docker/nginx/key_python.pem:/root/ssl/key_python.pem
       - ../docker/nginx/cert_python.pem:/root/ssl/cert._pythonpem
     ports:
-      - "1414:1414"
-      - "5001:5001"
+      - "1215:1215"
+      - "5000:5000"
     networks:
       - app-network
     depends_on:
@@ -25,7 +25,7 @@ services:
   php:
     restart: unless-stopped
     build: ../docker/php
-    container_name: pro7_php_dev
+    container_name: pro7_php
     working_dir: /app
     links:
       - redis
@@ -37,18 +37,18 @@ services:
       - ../docker/php/php-ini-overrides.ini:/etc/php/8.0/fpm/conf.d/99-overrides.ini
     networks:
       - app-network
-      
+
   redis:
     restart: unless-stopped
-    container_name: pro7_redis_dev
+    container_name: pro7_redis
     image: redis
     networks:
       - app-network
-  
+
   database:
     image: mysql:8
     restart: unless-stopped
-    container_name: pro7_mysql_dev
+    container_name: pro7_mysql
     environment:
       MYSQL_DATABASE: 'database'
       MYSQL_USER: 'user'
@@ -57,9 +57,9 @@ services:
       MYSQL_TCP_PORT: 3663
     networks:
       - app-network
-      
+
   phpmyadmin:
-    container_name: pro7_phpmyadmin_dev
+    container_name: pro7_phpmyadmin
     image: phpmyadmin/phpmyadmin
     links:
       - database
@@ -81,15 +81,13 @@ services:
 
   python:
     restart: unless-stopped
-    container_name: pro7_python_dev
+    container_name: pro7_python
     build: ../docker/python
     working_dir: /app
     networks:
       - app-network
     volumes:
-    - ../flask:/app
-    - ../docker/nginx/cert.pem:/root/ssl/cert.pem
-    - ../docker/nginx/key.pem:/root/ssl/key.pem
+      - ../flask:/app
     links:
       - database
 
